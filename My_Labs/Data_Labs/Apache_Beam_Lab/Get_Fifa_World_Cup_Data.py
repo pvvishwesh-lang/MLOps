@@ -2,6 +2,7 @@ import apache_beam as beam
 import logging
 import requests
 import time
+import os
 
 class callAPI(beam.DoFn):
     def __init__(self,header,url,retries):
@@ -31,12 +32,12 @@ def get_per_group_match_count(element):
     return f'{group},{len(matches)}'
 
 with beam.Pipeline() as p:
-    token='' #removing token
+    token=os.environ.get('TOKEN_FOR_FOOTBALL_API')
     headers={
         'X-Auth-Token':f"{token}",
         'Accept-Encoding': '' 
     }
-    url='' #removing uri
+    url=os.environ.get('URI_FOR_FOOTBALL_API')
     data=(
           p
           | "Seed" >> beam.Create([None])
