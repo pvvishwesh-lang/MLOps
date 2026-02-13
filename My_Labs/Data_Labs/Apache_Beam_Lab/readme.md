@@ -1,6 +1,6 @@
 # APACHE BEAM LAB
 
-## ABOUT
+## About
 In this lab, I tried to connect a batch pipeline to an open source API to fetch Fifa World Cup 2026 Data,get the number of matches each group will be playing,
 and store it locally in a txt file. 
 
