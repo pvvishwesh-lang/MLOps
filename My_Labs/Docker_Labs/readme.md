@@ -14,5 +14,10 @@ best performing model, save metrics and output along with the model.
 
 4: Wait for a few minutes. Once the execution ends, a new folder, output, is created which contains all the outputs from the run
 
+OPTIONAL:
+If you want to save the image, use the following command-
+   docker save  diabetes-model:latest > diabetes_model_image.tar
+
 ### REQUIREMENTS
 requirements.txt contains all the required imports, if any new changes are needed, add the import to requirements.txt and deploy the image
+
