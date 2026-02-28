@@ -1,0 +1,23 @@
+#USING LATEST PYTHON IMAGE AVAILABLE
+FROM python:3.11-slim 
+
+#SET WORKING DIRECTORY
+WORKDIR /app
+
+#COPYING REQUIREMENTS
+COPY requirements.txt .
+
+#INSTALLING DEPENDENCIES
+RUN pip install --no-cache-dir -r requirements.txt
+
+#COPY SOURCE CODE TO WORKING DIRECTORY
+COPY src/ .
+
+ENV PYTHONUNBUFFERED=1 
+
+
+#RUN THE APPLICATION
+CMD ["python","-u", "train_test_save_model.py"]
+
+
+
