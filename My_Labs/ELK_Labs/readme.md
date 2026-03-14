@@ -12,14 +12,17 @@ The dataset is downloaded from Kaggle using kagglehub and preprocessed by droppi
 - All five services: Elasticsearch, Kibana, Logstash, Filebeat, and Metricbeat, are orchestrated via Docker Compose.
 
 ## HOW TO REPLICATE
-1: Clone the github repo
-2: Navigate to  ELK_Labs folder
-3: Run the following command: python ELK_Lab.py and wait for the run to be completed
-4: Start docker service: docker compose up -d
-5: Verify data ingestion
-- curl -s "http://localhost:9200/fraud-predictions/_count"
-- curl -s "http://localhost:9200/.ds-filebeat-*/_count"
-- curl -s "http://localhost:9200/metricbeat-*/_count"
+- Clone the github repo
+- Navigate to  ELK_Labs folder
+- Run the following command: python ELK_Lab.py and wait for the run to be completed
+- Start docker service: docker compose up -d
+- Verify data ingestion by running:
+
+curl -s "http://localhost:9200/fraud-predictions/_count"
+
+curl -s "http://localhost:9200/.ds-filebeat-*/_count"
+
+curl -s "http://localhost:9200/metricbeat-*/_count"
 
 ## Requirements
 Docker + Docker Compose
