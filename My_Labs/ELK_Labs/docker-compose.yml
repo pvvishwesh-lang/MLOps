@@ -1,0 +1,68 @@
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:9.3.1-arm64
+    container_name: es-local-dev
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ports:
+      - "127.0.0.1:9200:9200"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s http://localhost:9200/_cluster/health | grep -q '\"status\":\"green\"\\|\"status\":\"yellow\"'"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:9.3.1-arm64
+    container_name: kibana-local-dev
+    ports:
+      - "127.0.0.1:5601:5601"
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s http://localhost:5601/api/status | grep -q 'available'"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:9.3.1
+    container_name: filebeat-local-dev
+    user: root
+    volumes:
+      - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      - ./logs:/usr/share/filebeat/logs
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    command: filebeat -e --strict.perms=false
+
+  metricbeat:
+    image: docker.elastic.co/beats/metricbeat:9.3.1
+    container_name: metricbeat-local-dev
+    user: root
+    volumes:
+      - ./metricbeat/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    command: metricbeat -e --strict.perms=false
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:9.3.1
+    container_name: affectionate_kirch
+    volumes:
+      - ./pipeline/fraud.conf:/usr/share/logstash/pipeline/fraud.conf
+      - ./pipeline/fraud_predictions.json:/usr/share/logstash/data/fraud_predictions.json
+    environment:
+      - xpack.monitoring.enabled=false
+      - LS_JAVA_OPTS=-Xms256m -Xmx256m
+    depends_on:
+      elasticsearch:
+        condition: service_healthy

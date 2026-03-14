@@ -1,0 +1,9 @@
+kagglehub
+elasticsearch
+lightgbm
+xgboost
+scikit-learn
+pandas
+pathlib
+lightgbm
+numpy

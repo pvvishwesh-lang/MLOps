@@ -1,0 +1,15 @@
+filebeat.inputs:
+  - type: filestream
+    id: fraud-detection-logs
+    enabled: true
+    paths:
+      - /usr/share/filebeat/logs/*.log
+    fields:
+      app: fraud-detection
+    prospector.scanner.fingerprint.length: 64
+    prospector.scanner.fingerprint.offset: 0
+
+output.elasticsearch:
+  hosts: ["http://elasticsearch:9200"]
+
+setup.ilm.enabled: false
