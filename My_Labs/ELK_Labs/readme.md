@@ -25,6 +25,6 @@ curl -s "http://localhost:9200/.ds-filebeat-*/_count"
 curl -s "http://localhost:9200/metricbeat-*/_count"
 
 ## Requirements
-Docker + Docker Compose
-Python 3.10+
-Kaggle API credentials (for dataset download)
+- Docker + Docker Compose
+- Python 3.10+
+- Kaggle API credentials (for dataset download)
