@@ -13,6 +13,8 @@ import subprocess
 import webbrowser
 import time
 
+subprocess.run(['pip','install','mlflow','pyspark==3.5.0'])
+
 mlflow.set_experiment("recession_predictor")
 logging.getLogger("py4j").setLevel(logging.WARNING)
 warnings.filterwarnings(action='ignore')
@@ -81,7 +83,7 @@ def score_new_data(model_uri):
           
 score_new_data(model_uri)
 
-logging.info('Trained, Scored and Saved the model. Opening UI on Browser....')
+print('Trained, Scored and Saved the model. Opening UI on Browser....')
 subprocess.Popen(["mlflow", "ui", "--port", "5001"])
-time.sleep(10)
+time.sleep(2)
 webbrowser.open("http://127.0.0.1:5001")
