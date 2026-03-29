@@ -1,6 +1,6 @@
 # Tensorboard Lab
 ## About
-In this lab, I built a tensorflow based neural network model that takes the Boston Housing dataset from Keras.datasets and logs everything from visualization.
+In this lab, I built a tensorflow based neural network model that takes the Boston Housing dataset from Keras.datasets and logs everything for visualization.
 
 ## Working
 ### DATASET:
